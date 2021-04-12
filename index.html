@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./assets/css/master.css">
+</head>
+
+<body>
+
+	<div id="root">
+		<div>{{titolo}}</div>
+
+		<div id="navbar">
+			<h1 class="title">Boolflix</h1>
+			<input placeholder="write film title" type="text" v-model="searchMovie">
+			<button @click="onSearch">search</button>
+		</div>
+
+		<main>
+			<div class="card" v-for="movie in arrayOfMovie">
+				<img :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" alt="">
+				<div class="title">Titolo: {{movie.title}}</div>
+				<div class="originalTitle">Titolo originale:{{movie.original_title}}</div>
+				<div class="lingua">Lingua: {{movie.original_language}}</div>
+				<div class="voto">Voto: {{movie.vote_average}}</div>
+			</div>
+
+		</main>
+	</div>
+
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="./assets/js/main.js"></script>
+</body>
+
+</html>
