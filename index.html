@@ -12,12 +12,11 @@
 <body>
 
 	<div id="root">
-		<div>{{titolo}}</div>
 
 		<div id="navbar">
 			<h1 class="title">Boolflix</h1>
 			<input placeholder="write film title" type="text" v-model="searchMovie">
-			<button @click="onSearch">search</button>
+			<button @click="onSearch('all')">search</button>
 		</div>
 
 		<main>

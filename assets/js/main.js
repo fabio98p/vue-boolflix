@@ -6,18 +6,57 @@ document.addEventListener('DOMContentLoaded', function () {
 		{
 			el: '#root',
 			data: {
-				titolo: "generatore di email da un posto random",
-				searchMovie: "back to the future",
 				arrayOfMovie: [],
+
+				//#region element for API
+				searchMovie: "back to the future",
+				uri: "https://api.themoviedb.org/3",
+				api_key: "389025e503a041a76d8fd9cd31f48057",
+				language: "it-IT",
+				//#endregion
 
 			},
 			methods: {
-				onSearch: function name() {
-					axios.get(`https://api.themoviedb.org/3/search/multi?api_key=389025e503a041a76d8fd9cd31f48057&query=${this.searchMovie}&language=it-IT`)
-						.then((result) => {
-							this.arrayOfMovie = result.data.results
-							console.log(this.arrayOfMovie);
-						});
+				callApi: function (search1, search2) {
+					if (!search2) {
+						axios.get(`${this.uri}/search/${search1}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
+							.then((result) => {
+								this.arrayOfMovie = result.data.results
+								console.log(this.arrayOfMovie);
+							});
+					} else {
+						this.arrayOfMovie = []
+						axios.get(`${this.uri}/search/${search1}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
+							.then((result) => {
+								this.arrayOfMovie = [...this.arrayOfMovie, ...result.data.results]
+							});
+
+						axios.get(`${this.uri}/search/${search2}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
+							.then((result) => {
+								this.arrayOfMovie = [...this.arrayOfMovie, ...result.data.results]
+							});
+
+
+					}
+				},
+				onSearch: function name(search) {
+
+					switch (search) {
+						case "movieAndTv":
+							this.callApi("movie", "tv")
+							break;
+						case "movie":
+							this.callApi("movie")
+							break;
+						case "tv":
+							this.callApi("tv")
+							break;
+						case "person":
+							this.callApi("person")
+							break;
+						default:
+							this.callApi("multi")
+					}
 				}
 			},
 			created: function () {
