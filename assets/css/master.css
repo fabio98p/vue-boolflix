@@ -33,8 +33,11 @@ main{
 	width: 20%;
 }
 
-.card img{
+.card img.locandina	{
 	width: 100%;
+}
+.card img.flag	{
+	width: 16px;
 }
 .card .title .active{
 	font-weight: bold;

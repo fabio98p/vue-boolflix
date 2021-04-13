@@ -22,10 +22,12 @@
 
 		<main>
 			<div class="card" v-for="movie in arrayOfMovie">
-				<img :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" alt="">
-				<div class="title">Titolo: {{movie.title}}</div>
-				<div class="originalTitle">Titolo originale:{{movie.original_title}}</div>
-				<div class="lingua">Lingua: {{movie.original_language}}</div>
+				<img class="locandina" :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" alt="">
+				<div class="title">Titolo: {{movie.title || movie.name}}</div>
+				<div class="originalTitle">Titolo originale:{{movie.original_title || movie.original_name}}</div>
+				<div class="lingua">Lingua: 
+					<img class="flag" :src="`https://www.unknown.nu/flags/images/${movie.original_language}-100`" :alt="movie.original_language">
+				</div>
 				<div class="voto">Voto: {{movie.vote_average}}</div>
 			</div>
 
