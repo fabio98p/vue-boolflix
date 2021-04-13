@@ -35,8 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
 							.then((result) => {
 								this.arrayOfMovie = [...this.arrayOfMovie, ...result.data.results]
 							});
-
-
 					}
 				},
 				onSearch: function name(search) {
@@ -57,6 +55,20 @@ document.addEventListener('DOMContentLoaded', function () {
 						default:
 							this.callApi("multi")
 					}
+				},
+				stelline: function (star) {
+					if (star >= 0 && star < 3) return 1;
+					else if (star >= 3 && star < 5) return 2;
+					else if (star >= 5 && star < 7) return 3;
+					else if (star >= 7 && star < 9) return 4;
+					else if (star >= 9) return 5;
+					else {
+						return 0
+					}
+
+				},
+				stellineVuote: function (star) {
+					return 5 - this.stelline(star) 
 				}
 			},
 			created: function () {
