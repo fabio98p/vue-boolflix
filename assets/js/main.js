@@ -14,67 +14,54 @@ document.addEventListener('DOMContentLoaded', function () {
 				api_key: "389025e503a041a76d8fd9cd31f48057",
 				language: "it-IT",
 				//#endregion
-
 			},
 			methods: {
-				callApi: function (search1, search2) {
-					if (!search2) {
-						axios.get(`${this.uri}/search/${search1}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
-							.then((result) => {
-								this.arrayOfMovie = result.data.results
-								console.log(this.arrayOfMovie);
-							});
-					} else {
-						this.arrayOfMovie = []
-						axios.get(`${this.uri}/search/${search1}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
-							.then((result) => {
-								this.arrayOfMovie = [...this.arrayOfMovie, ...result.data.results]
-							});
-
-						axios.get(`${this.uri}/search/${search2}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
-							.then((result) => {
-								this.arrayOfMovie = [...this.arrayOfMovie, ...result.data.results]
-							});
+				callApi: function (status, search1, search2) {
+					if (status == "search") {
+						if (!search2) {
+							axios.get(`${this.uri}/search/${search1}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
+								.then(result => this.arrayOfMovie = result.data.results);
+						} else {
+							this.arrayOfMovie = []
+							axios.get(`${this.uri}/search/${search1}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
+								.then(result => this.arrayOfMovie = [...this.arrayOfMovie, ...result.data.results]);
+							axios.get(`${this.uri}/search/${search2}?api_key=${this.api_key}&query=${this.searchMovie}&language=${this.language}`)
+								.then(result => this.arrayOfMovie = [...this.arrayOfMovie, ...result.data.results]);
+						}
+					}
+					if (status == "discovery") {
+							axios.get(`${this.uri}/discover/${search1}?api_key=${this.api_key}with_genres=${search2}&language=${this.language}`)
+								.then(result => this.arrayOfMovie = result.data.results);
 					}
 				},
-				onSearch: function name(search) {
-
+				onSearch: function (search) {
 					switch (search) {
-						case "movieAndTv":
-							this.callApi("movie", "tv")
-							break;
-						case "movie":
-							this.callApi("movie")
-							break;
-						case "tv":
-							this.callApi("tv")
-							break;
-						case "person":
-							this.callApi("person")
-							break;
-						default:
-							this.callApi("multi")
+						case "movieAndTv": this.callApi("search", "movie", "tv"); break;
+						case "movie": this.callApi("search", "movie"); break;
+						case "tv": this.callApi("search", "tv"); break;
+						case "person": this.callApi("search", "person"); break;
+						default: this.callApi("search", "multi");
+					}
+				},
+				onDiscovery: function (genre) {
+					switch (genre) {
+						case "movieAction": this.callApi("discovery", "movie", "28"); break;
+						case "tvAnimation": this.callApi("discovery", "tv", "16"); break;
+						case "movieAction": this.callApi("discovery", "movie", "28"); break;
+						// default: this.callApi("multi");
 					}
 				},
 				stelline: function (star) {
 					if (star >= 0 && star < 3) return 1;
-					else if (star >= 3 && star < 5) return 2;
-					else if (star >= 5 && star < 7) return 3;
-					else if (star >= 7 && star < 9) return 4;
-					else if (star >= 9) return 5;
-					else {
-						return 0
-					}
-
+					if (star >= 3 && star < 5) return 2;
+					if (star >= 5 && star < 7) return 3;
+					if (star >= 7 && star < 9) return 4;
+					if (star >= 9) return 5;
+					return 0
 				},
-				stellineVuote: function (star) {
-					return 5 - this.stelline(star) 
-				}
+				stellineVuote: function (star) {return 5 - this.stelline(star)}
 			},
 			created: function () {
-
-
-
 			}
 		}
 	);

@@ -13,15 +13,26 @@
 <body>
 
 	<div id="root">
-		<button @click="stelline('10')">hellloooo</button>
 		<div id="navbar">
-			<h1 class="title">Boolflix</h1>
-			<input placeholder="write film title" type="text" v-model="searchMovie">
-			<button @click="onSearch('all')">search</button>
+			
+			<div class="left">
+				<h1 class="title">Boolflix</h1>
+				<a href="">Home</a>
+				<a href="">Serie TV</a>
+				<a href="">Film</a>
+				<a href="">Nuovi e popolari</a>
+				<a href="">La mia lista</a>
+			</div>
+			
+			<div class="right">
+				<input placeholder="write film title" type="text" v-model="searchMovie">
+				<button @click="onSearch('all')">search</button>
+				<button @click="">bottone prova</button>
+			</div>
 		</div>
-
+		
 		<main>
-			<div class="card" v-for="movie in arrayOfMovie">
+			<div class="card search" v-for="movie in arrayOfMovie">
 				<img class="locandina" :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" alt="">
 				<div class="title">Titolo: {{movie.title || movie.name}}</div>
 				<div class="originalTitle">Titolo originale:{{movie.original_title || movie.original_name}}</div>
@@ -31,6 +42,25 @@
 				<div class="voto">Voto: 
 					<i v-for="star in stelline(movie.vote_average)" class="fas fa-star"></i>
 					<i v-for="star in stellineVuote(movie.vote_average)" class="far fa-star"></i>
+				</div>
+			</div>
+
+			<div class="cards">
+				<div class="titleCards">
+					<h2>Top film</h2>
+				</div>
+
+				<div class="card" v-for="movie in arrayOfMovie">
+					<img class="locandina" :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" alt="">
+					<div class="title">Titolo: {{movie.title || movie.name}}</div>
+					<div class="originalTitle">Titolo originale:{{movie.original_title || movie.original_name}}</div>
+					<div class="lingua">Lingua: 
+						<img class="flag" :src="`https://www.unknown.nu/flags/images/${movie.original_language}-100`" :alt="movie.original_language">
+					</div>
+					<div class="voto">Voto: 
+						<i v-for="star in stelline(movie.vote_average)" class="fas fa-star"></i>
+						<i v-for="star in stellineVuote(movie.vote_average)" class="far fa-star"></i>
+					</div>
 				</div>
 			</div>
 
