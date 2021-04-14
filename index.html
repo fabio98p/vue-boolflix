@@ -6,7 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+		crossorigin="anonymous" />
 	<link rel="stylesheet" href="./assets/css/master.css">
 </head>
 
@@ -14,7 +16,7 @@
 
 	<div id="root">
 		<div id="navbar">
-			
+
 			<div class="left">
 				<h1 class="title">Boolflix</h1>
 				<a href="">Home</a>
@@ -23,46 +25,42 @@
 				<a href="">Nuovi e popolari</a>
 				<a href="">La mia lista</a>
 			</div>
-			
+
 			<div class="right">
 				<input placeholder="write film title" type="text" v-model="searchMovie">
 				<button @click="onSearch('all')">search</button>
 				<button @click="">bottone prova</button>
 			</div>
 		</div>
-		
+
 		<main>
-			<div class="card search" v-for="movie in arrayOfMovie">
-				<img class="locandina" :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" alt="">
-				<div class="title">Titolo: {{movie.title || movie.name}}</div>
-				<div class="originalTitle">Titolo originale:{{movie.original_title || movie.original_name}}</div>
-				<div class="lingua">Lingua: 
-					<img class="flag" :src="`https://www.unknown.nu/flags/images/${movie.original_language}-100`" :alt="movie.original_language">
-				</div>
-				<div class="voto">Voto: 
-					<i v-for="star in stelline(movie.vote_average)" class="fas fa-star"></i>
-					<i v-for="star in stellineVuote(movie.vote_average)" class="far fa-star"></i>
-				</div>
-			</div>
+			<div class="card">
+				<div class="flip-card" v-for="movie in arrayOfMovie">
+					<div class="flip-card-inner">
 
-			<div class="cards">
-				<div class="titleCards">
-					<h2>Top film</h2>
-				</div>
+						<div class="flip-card-front">
+							<img class="locandina" :src="immages(movie)" alt="">
+						</div>
 
-				<div class="card" v-for="movie in arrayOfMovie">
-					<img class="locandina" :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" alt="">
-					<div class="title">Titolo: {{movie.title || movie.name}}</div>
-					<div class="originalTitle">Titolo originale:{{movie.original_title || movie.original_name}}</div>
-					<div class="lingua">Lingua: 
-						<img class="flag" :src="`https://www.unknown.nu/flags/images/${movie.original_language}-100`" :alt="movie.original_language">
-					</div>
-					<div class="voto">Voto: 
-						<i v-for="star in stelline(movie.vote_average)" class="fas fa-star"></i>
-						<i v-for="star in stellineVuote(movie.vote_average)" class="far fa-star"></i>
+						<div class="flip-card-back">
+							<div class="title">Titolo: {{movie.title || movie.name}}</div>
+							<div class="originalTitle">Titolo originale:{{movie.original_title ||
+								movie.original_name}}</div>
+							<div class="lingua">Lingua:
+								<img class="flag"
+									:src="`https://www.unknown.nu/flags/images/${movie.original_language}-100`"
+									:alt="movie.original_language">
+							</div>
+							<div class="voto">Voto:
+								<i v-for="star in stelline(movie.vote_average)" class="fas fa-star"></i>
+								<i v-for="star in stellineVuote(movie.vote_average)" class="far fa-star"></i>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>
+
 
 		</main>
 	</div>

@@ -1,4 +1,6 @@
 Vue.config.devtools = true;
+
+
 document.addEventListener('DOMContentLoaded', function () {
 	console.log('ciao ale');
 	//https://flynn.boolean.careers/exercises/api/random/mail
@@ -15,7 +17,13 @@ document.addEventListener('DOMContentLoaded', function () {
 				language: "it-IT",
 				//#endregion
 			},
+			
 			methods: {
+				
+				immages: function (movie) {
+					if (movie.backdrop_path) return `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
+					return "./assets/img/image-not-found.jpg"
+				},
 				callApi: function (status, search1, search2) {
 					if (status == "search") {
 						if (!search2) {
@@ -30,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
 						}
 					}
 					if (status == "discovery") {
-							axios.get(`${this.uri}/discover/${search1}?api_key=${this.api_key}with_genres=${search2}&language=${this.language}`)
-								.then(result => this.arrayOfMovie = result.data.results);
+						axios.get(`${this.uri}/discover/${search1}?api_key=${this.api_key}with_genres=${search2}&language=${this.language}`)
+							.then(result => this.arrayOfMovie = result.data.results);
 					}
 				},
 				onSearch: function (search) {
@@ -59,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					if (star >= 9) return 5;
 					return 0
 				},
-				stellineVuote: function (star) {return 5 - this.stelline(star)}
+				stellineVuote: function (star) { return 5 - this.stelline(star) }
 			},
 			created: function () {
 			}
